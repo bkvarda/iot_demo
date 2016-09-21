@@ -15,7 +15,7 @@ producer = KafkaProducer(bootstrap_servers=kafka_broker,api_version=(0,9))
 
 #get configuration stuff
 Config = ConfigParser.ConfigParser()
-Config.read('particlespark.conf')
+Config.read('particle_spark.conf')
 api_key = Config.get('Particle','ApiKey')
 print_events = Config.get('Options','PrintEvents')
 batch_size = int(Config.get('Options','BatchSize'))
