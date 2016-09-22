@@ -5,13 +5,11 @@ from kafka import KafkaClient, KafkaProducer
 
 
 #Config Variables
-kafka_broker = "quickstart.cloudera:9092"
+kafka_broker = "ip-10-0-0-136.ec2.internal:9092"
 kafka_topic = "particle"
 
 #Instantiate Kafka Producer
-#client = KafkaClient(kafka_broker)
 producer = KafkaProducer(bootstrap_servers=kafka_broker,api_version=(0,9))
-#producer = SimpleProducer(client, async=True, batch_send_every_n=1000, batch_send_every_t=10)
 
 #get configuration stuff
 Config = ConfigParser.ConfigParser()
@@ -51,21 +49,16 @@ for msg in messages:
             payload["event"] = event
             payload["data"] = data
             payload["ttl"] = int(ttl)
-            #payload["uid"] = coreid + published_at
-            #payload["body"] = formatted_time + "," + event + "," + data + "," + coreid + "," + ttl
         except:
             continue
      
-        #need to turn individual events into an array because Flume http source requires it
         message = json.dumps(payload)
 
         #if event printing is enabled, send to console
         if(print_events == 'enabled'):
             print(message)
         #send to Kafka
-        #message = "hello world"
         producer.send(kafka_topic,value=message)
-        #producer.flush() 
 
         count += 1
         
