@@ -6,14 +6,15 @@ from pyspark.streaming.kafka import KafkaUtils
 from pyspark.storagelevel import StorageLevel
 from pyspark.sql import SQLContext
 
+#conf = (SparkConf().setMaster("yarn-cluster").setAppName("Particle Stream to Kudu"))
 conf = (SparkConf().setMaster("yarn-client").setAppName("Particle Stream to Kudu"))
 sc = SparkContext(conf = conf)
 ssc = StreamingContext(sc,5)
 
 #Set up for Kafka and Kudu
-brokers = "ip-10-0-0-136.ec2.internal:9092"
+brokers = "ip-10-0-0-243.ec2.internal:9092"
 kudu_table = "particle_test"
-kudu_master = "ip-10-0-0-224.ec2.internal:7051"
+kudu_master = "ip-10-0-0-243.ec2.internal:7051"
 topic = "particle"
 
 #Lazy SqlContext evaluation

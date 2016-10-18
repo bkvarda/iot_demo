@@ -13,7 +13,7 @@ sqc = SQLContext(sc)
 
 kudu_all_events_table = "particle_test"
 kudu_counts_table = "particle_counts_total"
-kudu_master = "ip-10-0-0-224.ec2.internal:7051"
+kudu_master = "ip-10-0-0-243.ec2.internal:7051"
 
 #Read from Kudu table particle_test
 kudu_events_df = sqc.read.format('org.apache.kudu.spark.kudu').option('kudu.master',kudu_master).option('kudu.table',kudu_all_events_table).load()

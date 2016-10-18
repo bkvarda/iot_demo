@@ -11,9 +11,9 @@ conf = (SparkConf().setMaster("yarn-client").setAppName("Count Event Word 20 Sec
 sc = SparkContext(conf = conf)
 ssc = StreamingContext(sc,20)
 
-brokers = "ip-10-0-0-136.ec2.internal:9092"
+brokers = "ip-10-0-0-243.ec2.internal:9092"
 kudu_table = "particle_counts_last_20"
-kudu_master = "ip-10-0-0-224.ec2.internal:7051"
+kudu_master = "ip-10-0-0-243.ec2.internal:7051"
 topic = "particle"
 
 def getSqlContextInstance(sparkContext):

@@ -5,7 +5,7 @@ from kafka import KafkaClient, KafkaProducer
 
 
 #Config Variables
-kafka_broker = "ip-10-0-0-136.ec2.internal:9092"
+kafka_broker = "ip-10-0-0-243.ec2.internal:9092"
 kafka_topic = "particle"
 
 #Instantiate Kafka Producer

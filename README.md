@@ -19,7 +19,7 @@ This is a demonstration showing how to use Spark/Spark Streaming to read from Ka
 ##### Python Dependencies
 ```
 sudo pip install sseclient
-sudo pip install python-kafka
+sudo pip install kafka-python
 ```
 
 
