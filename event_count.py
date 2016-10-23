@@ -1,4 +1,4 @@
-import json, sys
+import json, sys, ConfigParser
 from operator import add
 from pyspark import SparkContext
 from pyspark import SparkConf
@@ -11,9 +11,12 @@ conf = (SparkConf().setMaster("yarn-client").setAppName("Count Event Word 20 Sec
 sc = SparkContext(conf = conf)
 ssc = StreamingContext(sc,20)
 
-brokers = "ip-10-0-0-243.ec2.internal:9092"
+
+Config = ConfigParser.ConfigParser()
+Config.read('particlespark.conf')
+kafka_broker = Config.get('Kafka','KafkaBrokers')
+kudu_master = Config.get('Kudu','KuduMaster')
 kudu_table = "particle_counts_last_20"
-kudu_master = "ip-10-0-0-243.ec2.internal:7051"
 topic = "particle"
 
 def getSqlContextInstance(sparkContext):
@@ -35,7 +38,7 @@ def get_event(payload):
         return payload["event"]
 
 
-kafkaStream = KafkaUtils.createDirectStream(ssc, [topic], {"metadata.broker.list": brokers})
+kafkaStream = KafkaUtils.createDirectStream(ssc, [topic], {"metadata.broker.list": kafka_broker})
 
 events_kafka_stream = kafkaStream.map(lambda x: get_event(json.loads(x[1])))
 

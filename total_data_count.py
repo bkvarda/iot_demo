@@ -1,4 +1,4 @@
-import json, sys
+import json, sys, ConfigParser
 from operator import add
 from pyspark import SparkContext
 from pyspark import SparkConf
@@ -11,9 +11,11 @@ conf = (SparkConf().setMaster("yarn-client").setAppName("Total Data Count"))
 sc = SparkContext(conf = conf)
 sqc = SQLContext(sc)
 
+Config = ConfigParser.ConfigParser()
+Config.read('particlespark.conf')
+kudu_master = Config.get('Kudu','KuduMaster')
 kudu_all_data_table = "particle_test"
 kudu_counts_table = "particle_counts_total_data"
-kudu_master = "ip-10-0-0-243.ec2.internal:7051"
 
 #Read from Kudu table particle_test
 kudu_events_df = sqc.read.format('org.apache.kudu.spark.kudu').option('kudu.master',kudu_master).option('kudu.table',kudu_all_data_table).load()

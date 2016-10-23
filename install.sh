@@ -1,6 +1,5 @@
 #Environment prep
 ZK="$1:2181"
-KUDU_MASTER="$2:7051"
 
 #Install pip
 sudo wget https://bootstrap.pypa.io/get-pip.py

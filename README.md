@@ -21,7 +21,8 @@ This is a demonstration showing how to use Spark/Spark Streaming to read from Ka
 sudo pip install sseclient
 sudo pip install kafka-python
 ```
-
+##### Configuration 
+Working on making this a bit easier. First, install the above Python dependencies and run the below commands using your specific parameters where necessary. particlespark.conf contains parameters that need to be filled out for all of the .py files (python producer and spark jobs) to run. You can define the Kudu Master location and Kafka Broker once so that it does not need to be defined in the individual files
 
 ##### Impala create table:
 ```

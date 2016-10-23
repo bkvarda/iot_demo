@@ -1,4 +1,4 @@
-import json
+import json, ConfigParser
 from pyspark import SparkContext
 from pyspark import SparkConf
 from pyspark.streaming import StreamingContext
@@ -12,9 +12,11 @@ sc = SparkContext(conf = conf)
 ssc = StreamingContext(sc,5)
 
 #Set up for Kafka and Kudu
-brokers = "ip-10-0-0-243.ec2.internal:9092"
+Config = ConfigParser.ConfigParser()
+Config.read('particlespark.conf')
+kafka_broker = Config.get('Kafka','KafkaBrokers')
+kudu_master = Config.get('Kudu','KuduMaster')
 kudu_table = "particle_test"
-kudu_master = "ip-10-0-0-243.ec2.internal:7051"
 topic = "particle"
 
 #Lazy SqlContext evaluation
@@ -31,7 +33,7 @@ def insert_into_kudu(time,rdd):
     kudu_df.write.format('org.apache.kudu.spark.kudu').option('kudu.master',kudu_master).option('kudu.table',kudu_table).mode("append").save()
 
 #Create a Kafka DStream by reading from our topic
-kafkaStream = KafkaUtils.createDirectStream(ssc, [topic], {"metadata.broker.list": brokers})
+kafkaStream = KafkaUtils.createDirectStream(ssc, [topic], {"metadata.broker.list": kafka_broker})
 
 #Get rid of the key, which is null anyways
 json_kafka_stream = kafkaStream.map(lambda x: x[1])

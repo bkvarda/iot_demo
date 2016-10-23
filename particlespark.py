@@ -3,25 +3,23 @@ from sseclient import SSEClient
 from datetime import datetime
 from kafka import KafkaClient, KafkaProducer
 
-
-#Config Variables
-kafka_broker = "ip-10-0-0-243.ec2.internal:9092"
-kafka_topic = "particle"
-
-#Instantiate Kafka Producer
-producer = KafkaProducer(bootstrap_servers=kafka_broker,api_version=(0,9))
-
-#get configuration stuff
+#Configuration
 Config = ConfigParser.ConfigParser()
-Config.read('particle_spark.conf')
+Config.read('particlespark.conf')
+kafka_broker = Config.get('Kafka','KafkaBrokers')
+kafka_topic = "particle"
 api_key = Config.get('Particle','ApiKey')
 print_events = Config.get('Options','PrintEvents')
 batch_size = int(Config.get('Options','BatchSize'))
 batch_pause = int(Config.get('Options','BatchPause'))
-flume_http_source = Config.get('Options','FlumeHttpSource')
 particle_uri = Config.get('Particle','ParticleUri')
 uri = particle_uri + '?access_token=' + api_key
 count = 0
+
+
+print kafka_broker
+#Instantiate Kafka Producer
+producer = KafkaProducer(bootstrap_servers=str(kafka_broker),api_version=(0,9))
 
 #not sure if these headers are necessary even, but leaving
 headers = {"Accept-Content":"application/json; charset=UTF-8"}
