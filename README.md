@@ -1,4 +1,4 @@
-### IOT Demo
+### IOT Demo 2
 
 #### Spark Streaming + Kafka + Kudu
 This is a demonstration showing how to use Spark/Spark Streaming to read from Kafka and insert data into Kudu - all in Python. The streaming data is coming from the Particle.io event stream, and requires an API key to consume. I believe this may be the first demonstration of reading from/writing to Kudu from Spark Streaming using Python.
